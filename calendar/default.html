@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<link href='css/fullcalendar.css' rel='stylesheet' />
+<link href='css/style.css' rel='stylesheet' />
+<link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='js/moment.min.js'></script>
+<!--<script src='js/jquery.min.js'></script>-->
+<script src='js/fullcalendar.min.js'></script>
+<script>
+
+
+  $(document).ready(function() {
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      defaultDate: '2016-05-12',
+      defaultView:'agendaWeek',
+      selectable: true,
+      selectHelper: true,
+      select: function(start, end) {
+        var title = prompt('Event Title:');
+        var eventData;
+        if (title) {
+          eventData = {
+            title: title,
+            start: start,
+            end: end
+          };
+          $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');
+      },
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      snapOnSlots: true, // When dragging/resizing a event it snaps on the timeslot
+      slots: [
+        {start: '07:35', end: '08:20'},
+        {start: '08:25', end: '09:10'},
+         {start: '09:15', end: '10:00'},
+         {start: '10:15', end: '11:00'},
+         {start: '11:05', end: '11:50'},
+         {start: '11:55', end: '12:40'},
+         {start: '12:40', end: '13:25'},
+         {start: '13:30', end: '14:15'},
+         {start: '14:20', end: '15:05'},
+         {start: '15:10', end: '15:55'},
+         {start: '16:00', end: '16:20'},
+         {start: '16:25', end: '17:35'}
+       ],
+      events: [
+        {
+          title: 'Mahmoud Mahmoud',
+          start: '2016-05-12T16:10:00',
+          end: '2016-05-12T17:10:00',
+        },
+         {
+          title: 'Mahmoud Mahmoud',
+          start: '2016-05-12T18:10:00',
+          end: '2016-05-12T19:10:00',
+        },
+      ],
+
+    });
+    
+  });
+
+  // Trigger action when the contexmenu is about to be shown
+$('a.fc-event').bind("contextmenu", function(event) {
+  // Avoid the real one
+  event.preventDefault();
+  // Show contextmenu, save the a.fc-event $(this) for access later
+  $(".custom-menu").data('event', $(this)).finish().toggle(100).
+    // In the right position (the mouse)
+  css({
+    top: event.pageY + "px",
+    left: event.pageX + "px"
+  });
+});
+
+// If the document is clicked somewhere
+$(document).bind("mousedown", function(e) {
+  // If the clicked element is not the menu
+  if (!$(e.target).parents(".custom-menu").length > 0) {
+    // Hide it
+    $(".custom-menu").hide(100);
+  }
+});
+
+// If the menu element is clicked
+$("ul.custom-menu li").click(function() {
+  // ul.custom-menu data has 'event'
+  var $event = $(this).parent().data('event');
+  // This is the triggered action name
+
+  var color = $(this).attr('data-color') || 'lightblue'; // Default to light blue
+  // Set the color for the event
+  // if the event has multiple sections (spans multiple weeks/days, depending on view)
+  // It will only change color of currently right-clicked section...
+  // See http://stackoverflow.com/questions/36128815/highlight-fullcalendar-events-that-expands-over-multiple-rows-columns/36185661
+  // for ideas on how to approach changing the color of all related sections if needed
+  $event.css('background-color', color);
+
+  // Hide it AFTER the action was triggered
+  $(".custom-menu").hide(100);
+});
+
+</script>
+
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+
+
+
+
+
+</head>
+  <body>
+    <a href="../public/Admin/index.php">Return to Backend</a>
+  	<div id='calendar'></div>
+
+    <ul class="custom-menu">
+      <li data-action="red" data-color="red" id="red">Red/Rouge</li>
+      <li data-action="green" data-color="green" id="green">Green/Verg</li>    
+    </ul>
+
+  </body>
+<script>
+
+
+// Trigger action when the contexmenu is about to be shown
+$(document).bind("contextmenu", function (event) { 
+    // Avoid the real one
+    event.preventDefault();
+  // Show contextmenu, save the a.fc-event $(this) for access later
+  $(".custom-menu").data('event', $(this)).finish().toggle(100).
+    // In the right position (the mouse)
+  css({
+    top: event.pageY + "px",
+    left: event.pageX + "px"
+  });
+});
+
+// If the document is clicked somewhere
+$(document).bind("mousedown", function(e) {
+  // If the clicked element is not the menu
+  if (!$(e.target).parents(".custom-menu").length > 0) {
+    // Hide it
+    $(".custom-menu").hide(100);
+  }
+});
+
+// If the menu element is clicked
+$("ul.custom-menu li").click(function() {
+ 
+ //var $event = $(this).parent().data('event');
+ 
+ // var color = $(this).attr('data-color') || 'lightblue'; // Default to light blue
+ 
+ // $event.css('background-color', color);
+ switch($(this).attr("data-action")) {
+        
+        // A case for each action. Your actions here
+        case "red": 
+
+         var $event = $(".fc-event");
+         $event.css("background-color","red");
+
+          break;
+        
+        case "green": 
+
+          var $event = $(".fc-event");
+          $event.css("background-color","green"); 
+          break;
+
+    }
+  
+
+  // Hide it AFTER the action was triggered
+  $(".custom-menu").hide(100);
+});
+
+
+</script> 
+    
+
+</html>
+

@@ -1,0 +1,54 @@
+/*body {
+	margin: 40px 10px;
+	padding: 0;
+	font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+	font-size: 14px;
+}
+*/
+#calendar {
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+
+#red{
+	background-color: red;
+}
+
+#green{
+	background-color: green;
+}
+
+.red{
+	background-color: red;
+}
+
+.green{
+	background-color: green;
+}
+
+.custom-menu{
+	display:none;
+	z-index:1000;
+	position:absolute;
+	overflow:hidden;
+	border:1px solid #CCC;
+	white-space: nowrap;
+	font-family: sans-serif;
+	background: #fff;
+	color:#333;
+	border-radius: 5px;
+	padding:0;
+}
+
+.custom-menu li{
+	padding:8px 12px;
+	cursor:pointer;
+	list-style-type:none;
+	transition:all .3s ease;
+}
+
+.custom-menu li:hover{
+	background-color: #DEF;
+}
+
